@@ -2,3 +2,4 @@ pandas
 numpy
 google-cloud-storage
 pyyaml
+tensorflow
