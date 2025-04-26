@@ -1,0 +1,6 @@
+data_ingestion:
+  bucket_name: "mlops_project_bucket_2"
+  bucket_file_names:
+    - "anime.csv"
+    - "anime_with_synopsis.csv"
+    - "animelist.csv"
