@@ -172,3 +172,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Add these lines to .gitignore
+*.csv
+*.pkl
+*.h5
+artifacts/*

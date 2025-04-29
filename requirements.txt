@@ -1,5 +1,7 @@
 pandas
 numpy
 google-cloud-storage
+joblib
+scikit-learn
 pyyaml
 tensorflow
