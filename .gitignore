@@ -177,4 +177,7 @@ cython_debug/
 *.csv
 *.pkl
 *.h5
-artifacts/*
+artifacts/model/
+artifacts/model_checkpoints/
+artifacts/processed/
+artifacts/raw/
