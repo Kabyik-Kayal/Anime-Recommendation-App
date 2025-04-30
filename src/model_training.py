@@ -1,4 +1,5 @@
 import os
+import comet_ml
 import numpy as np
 import joblib
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, LearningRateScheduler, TensorBoard
@@ -6,6 +7,7 @@ from src.logger import get_logger
 from src.custom_exception import CustomException
 from src.base_model import BaseModel
 from config.paths_config import *
+from dotenv import load_dotenv
 
 logger = get_logger(__name__)
 
@@ -14,6 +16,15 @@ class ModelTraining:
         try:
             self.data_path = data_path
             logger.info("Model initialized successfully.")
+
+            load_dotenv()
+            self.experiment = comet_ml.Experiment(
+                api_key=os.getenv("COMET_ML_API_KEY"),
+                project_name=os.getenv("COMET_ML_PROJECT_NAME"),
+                workspace=os.getenv("COMET_ML_WORKSPACE")
+                )
+            logger.info("Comet ML experiment initialized successfully.")
+
         except Exception as e:
             logger.error("Error initializing model: %s", str(e))
             raise CustomException("Error initializing model", e)
@@ -82,6 +93,13 @@ class ModelTraining:
                 model.load_weights(CHECKPOINT_FILE_PATH)
                 logger.info("Model trained successfully.")
 
+                for epoch in range(len(history.history['loss'])):
+                    train_loss = history.history['loss'][epoch]
+                    val_loss = history.history['val_loss'][epoch]
+
+                    self.experiment.log_metric("train_loss", train_loss, step=epoch)
+                    self.experiment.log_metric("val_loss", val_loss, step=epoch)
+
             except Exception as e:
                 logger.error("Error during model training: %s", str(e))
                 raise CustomException("Error during model training", e)
@@ -113,6 +131,11 @@ class ModelTraining:
 
             joblib.dump(user_weights, USER_WEIGHTS_FILE_PATH)
             joblib.dump(anime_weights, ANIME_WEIGHTS_FILE_PATH)
+
+            self.experiment.log_asset(MODEL_FILE_PATH)
+            self.experiment.log_asset(USER_WEIGHTS_FILE_PATH)
+            self.experiment.log_asset(ANIME_WEIGHTS_FILE_PATH)
+
             logger.info("User and Anime weights saved successfully.")
         except Exception as e:
             logger.error("Error saving model weights: %s", str(e))

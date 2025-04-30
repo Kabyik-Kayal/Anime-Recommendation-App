@@ -5,3 +5,5 @@ joblib
 scikit-learn
 pyyaml
 tensorflow
+comet-ml
+python-dotenv
