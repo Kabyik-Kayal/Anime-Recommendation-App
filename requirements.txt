@@ -7,3 +7,4 @@ pyyaml
 tensorflow
 comet-ml
 python-dotenv
+dvc
