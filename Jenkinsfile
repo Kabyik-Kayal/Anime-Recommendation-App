@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment{
+        VENV_DIR = 'venv'
+    }
     stages{
         stage("Cloning from GitHub") {
             steps {
@@ -10,5 +12,35 @@ pipeline {
                 }
             }
         }
+
+        stage("Making a virtual environment") {
+            steps {
+                script {
+                    echo "Making a virtual environment"
+                    sh """
+                        python -m venv ${VENV_DIR}
+                        source ${VENV_DIR}/bin/activate
+                        . ${VENV_DIR}/bin/activate
+                        pip install --upgrade pip
+                        pip install -e .
+                    """
+                }
+            }
+        }
+
+        stage('Pulling DVC'){
+            steps{
+                withCredentials([file(credentialsId:'gcp-anime-key', variable:'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    script {
+                        echo "Pulling DVC"
+                        sh """
+                            source ${VENV_DIR}/bin/activate
+                            dvc pull
+                        """
+                    }
+                }
+            }
+        }
+
     }
 }

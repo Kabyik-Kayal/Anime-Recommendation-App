@@ -49,7 +49,7 @@ These steps are for setting up Jenkins within a Docker container to run the pipe
 
 2.  **Get Initial Jenkins Admin Password:**
     ```bash
-    sudo docker logs jenkins-dind
+    sudo docker logs jenkins-anime
     ```
     Look for the password in the logs.
 
