@@ -8,3 +8,5 @@ tensorflow
 comet-ml
 python-dotenv
 dvc
+dvc-gs
+flask

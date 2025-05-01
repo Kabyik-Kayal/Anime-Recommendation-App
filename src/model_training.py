@@ -77,7 +77,7 @@ class ModelTraining:
                 
             lr_callback = LearningRateScheduler(lambda epoch:lrfn(epoch), verbose = 0)
             model_checkpoint = ModelCheckpoint(filepath=CHECKPOINT_FILE_PATH, save_weights_only=True, monitor='val_loss', mode='min', save_best_only=True)
-            early_stopping = EarlyStopping(patience=3, monitor="val_loss", mode="min", restore_best_weights=True)
+            early_stopping = EarlyStopping(patience=5, monitor="val_loss", mode="min", restore_best_weights=True)
             my_callbacks = [model_checkpoint, lr_callback, early_stopping]
 
             try:
