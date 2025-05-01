@@ -33,7 +33,7 @@ pipeline {
                     script {
                         echo "Pulling DVC"
                         sh """
-                            source ${VENV_DIR}/bin/activate
+                            . ${VENV_DIR}/bin/activate
                             dvc pull
                         """
                     }
