@@ -15,7 +15,8 @@ RUN apt-get update -y && \
 
 # Add Jenkins user to the Docker group (create if it doesn't exist)
 RUN groupadd -f docker && \
-    usermod -aG docker jenkins
+    usermod -aG docker jenkins \
+    usermod -aG root jenkins
 
 # Create the Docker directory and volume for DinD
 RUN mkdir -p /var/lib/docker
