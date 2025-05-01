@@ -1,5 +1,15 @@
 FROM python:3.8-slim
 
+# Declare build arguments for Comet ML credentials
+ARG COMET_ML_API_KEY
+ARG COMET_ML_PROJECT_NAME
+ARG COMET_ML_WORKSPACE
+
+# Set environment variables from build arguments
+ENV COMET_ML_API_KEY=${COMET_ML_API_KEY}
+ENV COMET_ML_PROJECT_NAME=${COMET_ML_PROJECT_NAME}
+ENV COMET_ML_WORKSPACE=${COMET_ML_WORKSPACE}
+
 # Set environment variables to prevent Python from writing .pyc files & Ensure Python output is not buffered
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1

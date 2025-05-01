@@ -57,7 +57,10 @@ pipeline {
                         gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
                         gcloud config set project ${GCP_PROJECT}
                         gcloud auth configure-docker --quiet
-                        docker build -t gcr.io/${GCP_PROJECT}/anime-recommendation-app:latest .
+                        docker build --build-arg COMET_ML_API_KEY=${COMET_ML_API_KEY} \\
+                                     --build-arg COMET_ML_PROJECT_NAME=${COMET_ML_PROJECT_NAME} \\
+                                     --build-arg COMET_ML_WORKSPACE=${COMET_ML_WORKSPACE} \\
+                                     -t gcr.io/${GCP_PROJECT}/anime-recommendation-app:latest .
                         docker push gcr.io/${GCP_PROJECT}/anime-recommendation-app:latest
                         """
                     }
