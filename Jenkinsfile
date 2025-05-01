@@ -46,7 +46,10 @@ pipeline {
 
         stage('Build and Deploy Docker Image') {
             steps{
-                withCredentials([file(credentialsId:'gcp-anime-key', variable:'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                withCredentials([file(credentialsId:'gcp-anime-key', variable:'GOOGLE_APPLICATION_CREDENTIALS'),
+                                string(credentialsId: 'comet-ml-api-key', variable: 'COMET_ML_API_KEY'),
+                                string(credentialsId: 'comet-ml-project-name', variable: 'COMET_ML_PROJECT_NAME'),
+                                string(credentialsId: 'comet-ml-workspace', variable: 'COMET_ML_WORKSPACE')]) {
                     script {
                         echo "Building and Deploying Docker Image to GCR"
                         sh """
@@ -64,7 +67,10 @@ pipeline {
 
         stage('Deploying to Kubernetes') {
             steps{
-                withCredentials([file(credentialsId:'gcp-anime-key', variable:'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                withCredentials([file(credentialsId:'gcp-anime-key', variable:'GOOGLE_APPLICATION_CREDENTIALS'),
+                                string(credentialsId: 'comet-ml-api-key', variable: 'COMET_ML_API_KEY'),
+                                string(credentialsId: 'comet-ml-project-name', variable: 'COMET_ML_PROJECT_NAME'),
+                                string(credentialsId: 'comet-ml-workspace', variable: 'COMET_ML_WORKSPACE')]) {
                     script {
                         echo "Deploying Docker Image to Kubernetes"
                         sh """

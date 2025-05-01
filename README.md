@@ -69,6 +69,13 @@ These steps are for setting up Jenkins within a Docker container to run the pipe
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
     apt-get update && apt-get install -y google-cloud-sdk
 
+    getent group docker #check if docker is accessible
+    id jenkins #check docker asssociated or not
+
+    chown root:docker /var/run/docker.sock #update socket ownership
+    chmod 660 /var/run/docker.sock
+
+
     exit
     ```
 
