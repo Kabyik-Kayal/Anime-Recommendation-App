@@ -1,0 +1,640 @@
+/* === Root Variables === */
+:root {
+    /* Vibrant & Dark Theme */
+    --primary-color: #ffffff;
+    --secondary-color: #8d01ff;
+    --accent-color: #FFD600;
+    --background-light: #1a1a1a;
+    --background-dark: #0d0d0d;
+    --text-light: #f0f0f0;
+    --text-dark: #cccccc;
+    --text-muted: #888888;
+    --border-color: #333333;
+    --shadow-color: rgba(0, 255, 163, 0.15);
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Roboto', sans-serif;
+    --border-radius: 10px;
+    --transition-speed: 0.25s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-secondary);
+    color: var(--text-light); /* Default text to light */
+    line-height: 1.6;
+    background-color: var(--background-dark); /* Dark base color */
+    /* Update grid background */
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px), /* Lighter grid lines */
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 25px 25px; /* Slightly larger grid squares */
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.page-wrapper {
+    max-width: 1600px;
+    margin: 0 auto;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    color: var(--text-light); /* Headings light */
+    margin-bottom: 1.2rem;
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+h1 { font-size: 2.8rem; }
+h2 { font-size: 2.2rem; }
+h3 { font-size: 1.6rem; }
+
+p {
+    margin-bottom: 1.2rem;
+    color: var(--text-muted); /* Muted text */
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color); /* Links use primary color */
+    transition: color var(--transition-speed) ease;
+}
+
+a:hover {
+    color: var(--secondary-color); /* Hover uses secondary color */
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--border-radius);
+}
+
+/* === Buttons === */
+.btn {
+    display: inline-block;
+    padding: 10px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    transition: all var(--transition-speed) ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-align: center;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+}
+
+.btn.primary {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    border: none;
+}
+
+.btn.primary:hover {
+    transform: translateY(-2px); /* Subtle lift */
+    box-shadow: 0 6px 16px var(--shadow-color); /* Slightly larger shadow on hover */
+}
+
+.btn.secondary {
+    background: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn.secondary:hover {
+    background: rgba(0, 255, 163, 0.1); /* Use primary color with alpha */
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* === Header & Navigation === */
+header {
+    padding: 1rem 2rem;
+    background: rgba(13, 13, 13, 0.85); /* Dark semi-transparent background */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for dark bg */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    font-size: 26px; /* Slightly smaller icon */
+    color: var(--primary-color);
+    margin-right: 10px; /* Adjusted spacing */
+    transition: transform var(--transition-speed) ease;
+}
+
+.logo:hover i {
+    transform: rotate(-15deg);
+}
+
+.logo h1 {
+    font-size: 1.5rem; /* Slightly smaller */
+    margin-bottom: 0;
+    font-weight: 700;
+    color: var(--text-light); /* Ensure logo text is light */
+}
+
+.logo span {
+    color: var(--secondary-color);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 2rem; /* Adjusted spacing */
+}
+
+.nav-links a {
+    color: var(--text-light); /* Light nav links */
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 6px; /* Adjusted padding */
+    font-size: 0.95rem; /* Slightly smaller */
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px; /* Thinner underline */
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); /* Keep vibrant gradient */
+    transition: width var(--transition-speed) ease;
+    border-radius: 2px;
+}
+
+.nav-links a.active::after,
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--primary-color); /* Hover/active uses primary */
+}
+
+/* === Hero Section === */
+.hero {
+    display: flex;
+    align-items: center;
+    padding: 6rem 2rem 8rem;
+    /* background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%); <-- Remove old gradient */
+    /* Add background image and overlay */
+    background-image: 
+        linear-gradient(rgba(13, 13, 13, 0.7), rgba(13, 13, 13, 0.85)), 
+        url('wallpaperflare.com_wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 75vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Remove pseudo-element shapes for a cleaner look */
+.hero::before,
+.hero::after {
+    display: none;
+}
+
+.hero-content {
+    flex: 1;
+    /* padding-right: 3rem; <-- Removed this line */
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 3.2rem; /* Adjusted size */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    /* Vibrant gradient text */
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    /* Add text shadow for better contrast */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Remove specific highlight class styling if not needed, rely on h1 gradient */
+/* .hero-content .highlight { ... } */
+
+.hero-content p {
+    font-size: 1.1rem; /* Adjusted size */
+    margin-bottom: 2.5rem;
+    max-width: 550px;
+    color: var(--text-light); /* Change from muted to light */
+    /* Add text shadow for better contrast */
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.image-container {
+    width: clamp(300px, 80%, 500px); /* Responsive width */
+    height: auto;
+    aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
+    background-image: url('https://i.imgur.com/rqvLwpM.png'); /* Ensure this URL is correct */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.1)); /* Softer shadow */
+    animation: float 5s ease-in-out infinite; /* Slightly faster animation */
+}
+
+@keyframes float {
+	0% { transform: translatey(0px); }
+	50% { transform: translatey(-15px); } /* Less movement */
+	100% { transform: translatey(0px); }
+}
+
+/* === How It Works Section === */
+.how-it-works {
+    padding: 6rem 2rem;
+    text-align: center;
+}
+
+.how-it-works h2 {
+    font-size: 2.3rem; /* Adjusted size */
+    margin-bottom: 4rem;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature {
+    padding: 2rem 1.5rem; /* Adjusted padding */
+    border-radius: var(--border-radius);
+    background: var(--background-dark); /* Use darkest shade for cards */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); /* Stronger shadow on dark */
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.feature:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+.feature-icon {
+    width: 60px; /* Smaller icon container */
+    height: 60px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px; /* Squircle shape */
+    box-shadow: 0 4px 10px var(--shadow-color);
+    flex-shrink: 0;
+}
+
+.feature-icon i {
+    font-size: 24px; /* Smaller icon */
+    color: #0d0d0d; /* Dark icon color for contrast on bright bg */
+}
+
+.feature h3 {
+    font-size: 1.3rem; /* Adjusted size */
+    margin-bottom: 0.8rem; /* Adjusted margin */
+    color: var(--primary-color);
+}
+
+.feature p {
+    font-size: 0.9rem; /* Adjusted size */
+    color: var(--text-muted);
+    flex-grow: 1;
+    line-height: 1.5; /* Adjusted line height */
+}
+
+/* === Form Section === */
+.recommendation-form {
+    padding: 5rem 2rem;
+    background: var(--background-light); /* Use lighter dark shade */
+    color: var(--text-light);
+    border-radius: 20px;
+    margin: 5rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    gap: 2.5rem; /* Adjusted gap */
+    justify-content: center;
+    align-items: stretch; /* Make containers equal height */
+    flex-wrap: wrap;
+}
+
+.form-container {
+    background: var(--background-dark); /* Darker container background */
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color); /* Use dark border */
+    flex: 1;
+    min-width: 300px;
+    max-width: 450px; /* Adjusted max width */
+    text-align: center;
+    display: flex; /* Use flex for vertical centering */
+    flex-direction: column;
+}
+
+.recommendation-form h2 {
+    color: var(--text-light);
+    font-size: 1.6rem; /* Adjusted size */
+    margin-bottom: 0.8rem;
+}
+
+.recommendation-form p {
+    color: var(--text-muted); /* Use standard muted text */
+    margin-bottom: 2rem;
+    font-size: 0.95rem; /* Adjusted size */
+    flex-grow: 1; /* Push button to bottom */
+}
+
+.input-group {
+    margin-bottom: 1.2rem; /* Adjusted margin */
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem; /* Adjusted margin */
+    font-weight: 500;
+    color: var(--text-light); /* Lighter label */
+    font-size: 0.9rem;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px 16px; /* Adjusted padding */
+    border-radius: 6px; /* Smaller radius for inputs */
+    border: 1px solid var(--border-color); /* Dark border */
+    font-size: 0.95rem;
+    font-family: var(--font-secondary);
+    background-color: #2a2a2a; /* Slightly lighter dark input background */
+    color: var(--text-light); /* Light text in inputs */
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease;
+}
+
+.input-group input::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background-color: #333333;
+    box-shadow: 0 0 0 2px rgba(255, 214, 0, 0.4);
+}
+
+.input-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23f0f0f0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 1em;
+}
+
+/* Style select option text color (though limited browser support) */
+.input-group select option {
+    background: #2a2a2a;
+    color: var(--text-light);
+}
+
+
+.recommendation-form .btn.primary {
+    width: 100%;
+    padding: 12px 30px; /* Adjusted padding */
+    margin-top: 1rem;
+    background: var(--accent-color);
+    color: var(--background-dark);
+    box-shadow: 0 4px 12px rgba(255, 214, 0, 0.3);
+    border: none;
+}
+
+.recommendation-form .btn.primary:hover {
+    background: #FFC107;
+    color: var(--background-dark);
+    box-shadow: 0 6px 16px rgba(255, 214, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+/* === Results Section === */
+.recommendations {
+    padding: 5rem 2rem;
+    text-align: center;
+    min-height: 30vh;
+}
+
+.recommendations h2 {
+    font-size: 2.3rem;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+}
+
+.recommendations ul {
+    list-style: none;
+    padding: 0;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.recommendations li {
+    background-color: var(--background-dark);
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.8rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    border-left: 4px solid var(--secondary-color); 
+    display: flex;
+    align-items: center;
+    color: var(--text-light); 
+}
+
+.recommendations li:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.recommendations p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    background-color: var(--background-dark);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 700px;
+    margin: 0 auto;
+    border-left: 4px solid var(--accent-color);
+}
+
+/* === Footer === */
+footer {
+    background: var(--background-dark);
+    color: var(--text-muted);
+    padding: 3rem 2rem 1.5rem;
+    margin-top: 5rem;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+.footer-logo {
+   display: none; /* Hide if not used */
+}
+
+.footer-bottom {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.footer-bottom p {
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+/* === Responsive Design === */
+@media (max-width: 1200px) {
+    .hero-content h1 { font-size: 3rem; }
+    .hero-content p { font-size: 1.1rem; }
+    .image-container { width: clamp(250px, 70%, 450px); }
+}
+
+@media (max-width: 992px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.4rem; }
+
+    .hero {
+        flex-direction: column;
+        padding: 4rem 1.5rem;
+        text-align: center;
+        min-height: auto;
+    }
+    .hero-content {
+        margin-bottom: 3rem;
+    }
+    .hero-content p {
+        max-width: 100%;
+    }
+    .hero-buttons {
+        justify-content: center;
+    }
+    .image-container {
+        margin-top: 2rem;
+    }
+
+    .recommendation-form {
+        flex-direction: column;
+        gap: 2rem;
+        margin: 4rem 1.5rem;
+    }
+    .form-container {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    header { padding: 1rem; }
+    .nav-links { display: none; }
+
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-content p { font-size: 1rem; }
+
+    .how-it-works,
+    .recommendations,
+    .recommendation-form {
+        padding: 4rem 1rem;
+    }
+    .recommendation-form { margin: 3rem 1rem; }
+
+    .features { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 576px) {
+    body { font-size: 15px; }
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+
+    .btn { padding: 10px 24px; font-size: 0.9rem; }
+
+    .hero-content h1 { font-size: 2.2rem; }
+    .image-container { width: clamp(200px, 80%, 300px); }
+
+    .form-container { padding: 2rem 1.5rem; }
+    .input-group input, .input-group select { padding: 12px 15px; }
+
+    .recommendations li { padding: 1rem 1.2rem; font-size: 1rem; }
+}

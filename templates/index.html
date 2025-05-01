@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommendation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Header Section -->
+        <header>
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-tv"></i>
+                    <h1>Anime<span>Recommender</span></h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="https://www.kabyik.me/">About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Discover Your Next <span class="highlight">Favourite Anime</span></h1>
+                <p>Our advanced recommendation system uses hybrid filtering to suggest anime tailored just for you!</p>
+                <div class="hero-buttons">
+                    <a href="#recommendation-form" class="btn primary">Get Started</a>
+                    <a href="https://github.com/Kabyik-Kayal/Anime-Recommendation-App" class="btn secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-container"></div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <h2>How Our Recommendation System Works</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-th-large"></i>
+                    </div>
+                    <h3>Content Based</h3>
+                    <p>Recommendations based on anime characteristics such as genre, plot, and style.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>User Based</h3>
+                    <p>Collaborative filtering based on similar users' preferences and ratings.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Hybrid System</h3>
+                    <p>This system has been integrated in both system, combining both approaches for more accurate and diverse recommendations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="recommendation-form" id="recommendation-form">
+            <div class="form-container">
+                <h2>Get Your Personalized Recommendations</h2>
+                <p>Choose an User ID from our Database to get Anime recommendations from the experienced users.</p>
+
+                <form action="/" method="post">
+                    <input type="hidden" name="recommendation_type" value="user_id">
+                    <div class="input-group">
+                        <label for="UserID">User ID</label>
+                        <select id="UserID" name="UserID" required>
+                            <option value="" disabled selected>Select a User ID</option>
+                            {% for user_id in user_ids %}
+                            <option value="{{ user_id }}">{{ user_id }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn primary">Get Hybrid Recommendations</button>
+                </form>
+            </div>
+
+            <div class="form-container">
+                <h2>Find Similar Anime</h2>
+                <p>Enter an Anime Name to get recommendations similar to the anime based on content, genre, etc..</p>
+
+                <form action="/" method="post">
+                     <input type="hidden" name="recommendation_type" value="anime_name">
+                    <div class="input-group">
+                        <label for="AnimeName">Anime Name</label>
+                        <input type="text" id="AnimeName" name="AnimeName" placeholder="Enter an Anime Name (e.g., Naruto)">
+                    </div>
+                    <button type="submit" class="btn primary">Find Similar Anime</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Results Section - Now an empty container to be filled by JS -->
+        <section id="results-section" class="recommendations" style="display: none;">
+            <h2 id="results-title"></h2>
+            <div id="results-list"></div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-tv"></i>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 -- Kabyik Kayal.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript for AJAX form submission -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('.recommendation-form form');
+            const resultsSection = document.getElementById('results-section');
+            const resultsTitle = document.getElementById('results-title');
+            const resultsList = document.getElementById('results-list');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    const formData = new FormData(form);
+                    const submitButton = form.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.textContent;
+
+                    // Show loading state
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Loading...';
+                    resultsSection.style.display = 'none';
+                    resultsList.innerHTML = '';
+                    resultsTitle.textContent = '';
+
+                    fetch('/', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        resultsSection.style.display = 'block';
+                        resultsTitle.textContent = data.result_title || 'Results';
+
+                        if (data.error) {
+                            resultsList.innerHTML = `<p>${data.error}</p>`;
+                        } else if (data.recommendations && data.recommendations.length > 0) {
+                            let listHtml = '<ul>';
+                            data.recommendations.forEach(anime => {
+                                listHtml += `<li>${anime}</li>`;
+                            });
+                            listHtml += '</ul>';
+                            resultsList.innerHTML = listHtml;
+                        } else {
+                            resultsList.innerHTML = '<p>No recommendations found for your input.</p>';
+                        }
+
+                        // Scroll smoothly to the results section
+                        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching recommendations:', error);
+                        resultsSection.style.display = 'block';
+                        resultsTitle.textContent = 'Error';
+                        resultsList.innerHTML = '<p>An error occurred while fetching recommendations. Please try again.</p>';
+                        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    })
+                    .finally(() => {
+                        // Restore button state
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
