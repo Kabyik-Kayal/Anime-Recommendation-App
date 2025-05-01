@@ -283,18 +283,6 @@ nav {
     z-index: 1;
 }
 
-.image-container {
-    width: clamp(300px, 80%, 500px); /* Responsive width */
-    height: auto;
-    aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
-    background-image: url('https://i.imgur.com/rqvLwpM.png'); /* Ensure this URL is correct */
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.1)); /* Softer shadow */
-    animation: float 5s ease-in-out infinite; /* Slightly faster animation */
-}
-
 @keyframes float {
 	0% { transform: translatey(0px); }
 	50% { transform: translatey(-15px); } /* Less movement */
